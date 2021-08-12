@@ -20,7 +20,7 @@ const VideosScreen = ({navigation}) => {
             contentContainerStyle={styles.contentContainerStyle}
             containerStyle={styles.containerStyle}
             titleStyle={{fontSize: 15}}
-            onPress={() => navigation.navigate('Video_screen', {
+            onPress={() => navigation.navigate('VideoScreen', {
                 id: 'hsdvhsjdv',
                 postData: {}
             })}

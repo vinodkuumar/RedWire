@@ -8,11 +8,14 @@ import {connect} from 'react-redux';
 
 
 const Drawer = createDrawerNavigator();
-import {Stack,HomeStack,VideosStack} from './routes/Stacks';
+
+
+import {Stack,HomeStack,VideosStack, screenOptions} from './routes/Stacks';
 import SideDrawerCustom from './utils/customDrawer';
 import {Colors} from './utils/tools';
 
 import VideosScreen from './components/home/videos';
+import VideoScreen from './components/home/videos/video';
 import HomeScreen from './components/home/articles';
 import AuthScreen from './components/auth';
 import ProfileScreen from './components/user/profile';
@@ -36,6 +39,7 @@ class App extends Component {
           {this.props.auth.isAuth ? (
             <>
               <Stack.Screen name="Main" component={MainDrawer} options={{headerShown: false}} />
+              <Stack.Screen name="VideoScreen" component={VideoScreen} options={{...screenOptions, headerBackTitleVisible: false}}/>
             </>
           ) : (
             <Stack.Screen name="AuthScreen" component={AuthScreen} />

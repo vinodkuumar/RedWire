@@ -46,7 +46,7 @@ export const VideosStack = () => (
         }}
         initialRouteName="Videos_screen">
     <Stack.Screen name="Videos_screen" component={VideosScreen} options={{headerLeft: (props) => <LeftIcon />}} />
-    <Stack.Screen name="Video_screen" component={VideoScreen} />
+    
   </Stack.Navigator>
 );
 
