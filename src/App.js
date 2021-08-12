@@ -42,7 +42,7 @@ class App extends Component {
               <Stack.Screen name="VideoScreen" component={VideoScreen} options={{...screenOptions, headerBackTitleVisible: false}}/>
             </>
           ) : (
-            <Stack.Screen name="AuthScreen" component={AuthScreen} />
+            <Stack.Screen name="AuthScreen" component={AuthScreen} options={{headerShown: false}} />
           )}
         </Stack.Navigator>
       </NavigationContainer>
