@@ -3,42 +3,41 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useDispatch, useSelector} from 'react-redux';
-import {registerUser,clearAuthError} from '../../store/actions';
+import {registerUser, loginUser, clearAuthError} from '../../store/actions';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {Input, Button} from 'react-native-elements';
 import {LogoText, Colors, showToast} from '../../utils/tools';
 
 const AuthScreen = () => {
-    const dispatch = useDispatch();
-    const error = useSelector(state => state.auth.error)
+  const dispatch = useDispatch();
+  const error = useSelector(state => state.auth.error);
   const [formType, setFormType] = useState(true);
   const [secureEntry, setSecureEntry] = useState(true);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (values) => {
-      setLoading(true)
-      if(formType){
-          dispatch(registerUser(values))
-          alert('registered successfully')
-
-      }
-      else {
-          //sign in
-      }
-    
+  const handleSubmit = values => {
+    setLoading(true);
+    if (formType) {
+      dispatch(registerUser(values));
+      alert('registered successfully');
+    } else {
+      //sign in
+      dispatch(loginUser(values));
+      alert('login success');
+    }
   };
   useEffect(() => {
-    if(error){
-        showToast('error', 'Sorry',error)
-        setLoading(false)
+    if (error) {
+      showToast('error', 'Sorry', error);
+      setLoading(false);
     }
   }, [error]);
   useFocusEffect(
-      useCallback(() => {
-          return () => dispatch(clearAuthError)
-      },[])
-  )
+    useCallback(() => {
+      return () => dispatch(clearAuthError);
+    }, []),
+  );
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
