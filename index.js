@@ -8,6 +8,7 @@ import App from './src/App';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import promiseMiddleware from 'redux-promise';
+import reduxThunk from 'redux-thunk';
 import reducers from './src/store/reducers';
 import {name as appName} from './app.json';
 import {DarkTheme, Provider as PaperProvider} from 'react-native-paper';
@@ -17,7 +18,7 @@ import {View,Text} from 'react-native';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const createStoreWithMiddleware = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(promiseMiddleware)),
+  composeEnhancers(applyMiddleware(reduxThunk)),
 );
 
 const toastConfig = {

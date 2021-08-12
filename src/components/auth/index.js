@@ -3,35 +3,57 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useDispatch, useSelector} from 'react-redux';
+import {registerUser,clearAuthError} from '../../store/actions';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {Input, Button} from 'react-native-elements';
-import {LogoText, Colors,showToast} from '../../utils/tools';
+import {LogoText, Colors, showToast} from '../../utils/tools';
 
 const AuthScreen = () => {
+    const dispatch = useDispatch();
+    const error = useSelector(state => state.auth.error)
   const [formType, setFormType] = useState(true);
   const [secureEntry, setSecureEntry] = useState(true);
+  const [loading,setLoading] = useState(false)
 
-  const handleSubmit = values => {
-    alert(values);
+  const handleSubmit = (values) => {
+      setLoading(true)
+      if(formType){
+          dispatch(registerUser(values))
+          alert('registered successfully')
+
+      }
+      else {
+          //sign in
+      }
+    
   };
   useEffect(() => {
-      showToast('success', 'sorry', 'error message')
-  },[])
+    if(error){
+        showToast('error', 'Sorry',error)
+        setLoading(false)
+    }
+  }, [error]);
+  useFocusEffect(
+      useCallback(() => {
+          return () => dispatch(clearAuthError)
+      },[])
+  )
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <LogoText />
         <Formik
           initialValues={{
-            email: 'vinodkumarmuppera@gmail.com',
-            password: 'test123',
+            email: '',
+            password: '',
           }}
           validationSchema={Yup.object({
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
             password: Yup.string()
-              .max(10, 'Must be 10 or less')
+              .max(20, 'Must be 10 or less')
               .required('Password is required'),
           })}
           onSubmit={values => handleSubmit(values)}>
@@ -54,6 +76,9 @@ const AuthScreen = () => {
                 inputStyle={styles.inputStyle}
                 placeholderTextColor={Colors.grey}
                 inputContainerStyle={styles.inputContainerStyle}
+                renderErrorMessage={errors.email && touched.email}
+                errorMessage={errors.email}
+                errorStyle={{color: Colors.black}}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email is required')}
                 value={values.email}
@@ -74,8 +99,11 @@ const AuthScreen = () => {
                   name: secureEntry ? 'eye' : 'eyeo',
                   onPress: () => setSecureEntry(!secureEntry),
                 }}
-                onChangeText={handleChange('Password')}
-                onBlur={handleBlur('Password')}
+                renderErrorMessage={errors.password && touched.password}
+                errorMessage={errors.password}
+                errorStyle={{color: Colors.black}}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
                 value={values.password}
               />
               <Button
@@ -85,10 +113,14 @@ const AuthScreen = () => {
                   marginTop: 20,
                 }}
                 titleStyle={{width: '100%'}}
+                onPress={handleSubmit}
+                loading={loading}
               />
               <Button
                 type="clear"
-                title={`${!formType ? 'Already Registered?' : 'Need to Sign in?' }`}
+                title={`${
+                  !formType ? 'Already Registered?' : 'Need to Sign in?'
+                }`}
                 buttonStyle={{
                   backgroundColor: Colors.black,
                   marginTop: 20,
