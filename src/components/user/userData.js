@@ -4,7 +4,15 @@ import {TextInput,Button,Title} from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+import {useSelector,useDispatch} from 'react-redux';
+import {updateUserData} from '../../store/actions';
+
 const UserData = () => {
+    const [loading,setLoading] = useState(false);
+    const error = useSelector(state => state.auth.error);
+    const {user} = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
     const handleSubmit = (values) => {
         alert('Submit')
     }
@@ -12,9 +20,9 @@ const UserData = () => {
         <Formik 
             enableReinitialize={true}
             initialValues={{
-                name: '',
-                lastname: '',
-                age: ''
+                name: user.name ? user.name : '',
+                lastname: user.lastname ? user.lastname :  '',
+                age: user.age ? user.age :  ''
             }}
             validationSchema={Yup.object({
                 name: Yup.string().required('The name is required'),
@@ -25,6 +33,7 @@ const UserData = () => {
         >
             {({handleChange, handleBlur, handleSubmit, values, touched, errors}) => (
                 <View style={{padding: 20}}>
+                    <Title>About You</Title>
                     <TextInput 
                         label="name"
                         mode="flat"

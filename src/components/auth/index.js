@@ -12,6 +12,7 @@ import {LogoText, Colors, showToast} from '../../utils/tools';
 const AuthScreen = () => {
   const dispatch = useDispatch();
   const error = useSelector(state => state.auth.error);
+
   const [formType, setFormType] = useState(true);
   const [secureEntry, setSecureEntry] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -21,10 +22,14 @@ const AuthScreen = () => {
     if (formType) {
       dispatch(registerUser(values));
       alert('registered successfully');
+
+      
     } else {
       //sign in
       dispatch(loginUser(values));
       alert('login success');
+
+      
     }
   };
   useEffect(() => {
@@ -35,7 +40,7 @@ const AuthScreen = () => {
   }, [error]);
   useFocusEffect(
     useCallback(() => {
-      return () => dispatch(clearAuthError);
+      return () => dispatch(clearAuthError());
     }, []),
   );
   return (

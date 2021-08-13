@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {connect} from 'react-redux';
+import {autoSignIn} from './store/actions';
+
 
 import { StyleSheet, Text, View } from 'react-native';
 import SideDrawerCustom from './utils/customDrawer';
@@ -13,6 +15,7 @@ import {Stack, HomeStack, VideosStack, screenOptions} from './routes/Stacks';
 import VideoScreen from './components/home/videos/video';
 import AuthScreen from './components/auth';
 import ProfileScreen from './components/user/profile';
+import Splash from './components/auth/splash';
 
 const Drawer = createDrawerNavigator();
 
@@ -27,6 +30,16 @@ const MainDrawer = () => (
 );
 
 class App extends Component {
+  
+  state = {
+    loading: true
+  }
+  componentDidMount() {
+    // this.props.dispatch(autoSignIn()).then(() => {
+    //   this.setState({loading: false})
+    // })
+    this.setState({loading:false})
+  }
   render() {
     return (
       <NavigationContainer>
@@ -45,6 +58,14 @@ class App extends Component {
               />
             </>
           ) : (
+            this.state.loading ?
+            <Stack.Screen 
+              name="Splash" 
+              component={Splash} 
+              options={{headerShown: false}}
+
+              />
+              : 
             <Stack.Screen
               name="AuthScreen"
               component={AuthScreen}
@@ -61,4 +82,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = () => ({
+  autoSignIn
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

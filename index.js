@@ -13,7 +13,7 @@ import reducers from './src/store/reducers';
 import {name as appName} from './app.json';
 import {DarkTheme, Provider as PaperProvider} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-import {View,Text} from 'react-native';
+import {View,Text,LogBox} from 'react-native';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const createStoreWithMiddleware = createStore(
@@ -28,6 +28,9 @@ const toastConfig = {
         </View>
     )
 }
+
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 const reduxApp = () => (
   <Provider store={createStoreWithMiddleware}>
