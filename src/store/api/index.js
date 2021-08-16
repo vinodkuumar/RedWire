@@ -61,22 +61,25 @@ export const autoSignIn = () =>
     });
   });
 
+export const logoutUser = () => {
+  firebase.auth().signOut();
+};
 
-  export const logoutUser = () => (
-    firebase.auth().signOut();
-  )
+export const updateUserData = async (values, user) => {
+  try {
+    const collection = userCollection.doc(user.uid);
+    const update = await collection.update(values);
 
-  export const updateUserData = async(values,user) => {
-    try {
-      const collection = userCollection.doc(user.uid)
-      const update = await collection.update(values)
-
-      const newUser = {
-        ...user,
-        ...values
-      }
-      return {user: newUser, error: null}
-    } catch(error){
-      return {user: user, error: error}
-    }
+    const newUser = {
+      ...user,
+      ...values,
+    };
+    return {user: newUser, error: null};
+  } catch (error) {
+    return {user: user, error: error};
   }
+};
+
+
+
+

@@ -4,11 +4,12 @@ import {Appbar, TextInput, Divider, Button, Title} from 'react-native-paper';
 
 import UserData from './userData';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+  const goBack = () => navigation.navigate('Home_screen');
   return (
     <ScrollView>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => alert('Back')} />
+        <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Profile" subtitle="RedWire" />
       </Appbar.Header>
       <View style={{padding: 20}}>

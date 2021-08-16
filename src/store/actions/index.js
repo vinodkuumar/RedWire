@@ -28,3 +28,19 @@ export const updateUserData = (values,user) => ({
 export const clearAuthError = () => ({
     type: 'CLEAR_AUTH_ERROR'
 })
+
+export const fetchArticles = () => {
+    return async dispatch => {
+      //login to fetch data using api
+      const result = await fetch(
+        'https://newsapi.org/v2/everything?q=tesla&from=2021-07-16&sortBy=publishedAt&apiKey=864022f18f974c47b1d42a483cbdff25',
+      );
+      const resultData = await result.json()
+      console.log('news data = ',resultData);
+  
+      dispatch({
+        type: 'FETCH_ARTICLES',
+        payload: resultData,
+      });
+    };
+  };
