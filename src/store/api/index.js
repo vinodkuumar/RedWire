@@ -65,21 +65,54 @@ export const logoutUser = () => {
   firebase.auth().signOut();
 };
 
-export const updateUserData = async (values, user) => {
-  try {
-    const collection = userCollection.doc(user.uid);
-    const update = await collection.update(values);
 
-    const newUser = {
-      ...user,
-      ...values,
-    };
-    return {user: newUser, error: null};
-  } catch (error) {
-    return {user: user, error: error};
-  }
+export const createUser = values => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await fetch(
+      `https://redwire-7d8a9-default-rtdb.firebaseio.com/users.json?auth=${token}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-TYpe': 'application/json',
+        },
+        body: JSON.stringify({
+          values,
+        }),
+      },
+    );
+    const resData = await response.json();
+    console.log('responseData = ', resData);
+    dispatch({
+      type: 'CREATE_PRODUCT',
+      values,
+    });
+  };
 };
 
 
-
-
+export const updateUserData = async (values, user) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(
+      `https://redwire-7d8a9-default-rtdb.firebaseio.com/${id}.json?auth=${token}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          values,
+        }),
+      },
+    );
+    if (!response.ok) {
+      throw new Error('Something went wrong');
+    }
+    dispatch({
+      type: 'UPD_USER_DATA',
+      payload: values,
+    });
+  };
+};

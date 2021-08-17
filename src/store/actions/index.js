@@ -33,10 +33,10 @@ export const fetchArticles = () => {
     return async dispatch => {
       //login to fetch data using api
       const result = await fetch(
-        'https://newsapi.org/v2/everything?q=tesla&from=2021-07-16&sortBy=publishedAt&apiKey=864022f18f974c47b1d42a483cbdff25',
+        'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=864022f18f974c47b1d42a483cbdff25',
       );
       const resultData = await result.json()
-      console.log('news data = ',resultData);
+    //  console.log('news data = ',resultData);
   
       dispatch({
         type: 'FETCH_ARTICLES',
@@ -44,3 +44,21 @@ export const fetchArticles = () => {
       });
     };
   };
+
+const MAX_RESULT = 15;
+const PLAYLIST_ID = "PLcDaXGnNU58bmEbkYNUHsrLMF6a_AqjF9";
+const API_KEY= "AIzaSyBVBzOASEl7eq50CM085LUoMYEnDP6WMCI"
+
+  export const fetchVideos = () => {
+      return async dispatch => {
+          const result = await fetch(
+              `https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULT}&part=snippet%2CcontentDetails&key=${API_KEY}`
+              );
+          const resultData = await result.json()
+        //   console.log('videos data = ',resultData);
+          dispatch ({
+              type: 'FETCH_VIDEOS',
+              payload: resultData
+          })
+      }
+  }

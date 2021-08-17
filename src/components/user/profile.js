@@ -1,10 +1,12 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {Appbar, TextInput, Divider, Button, Title} from 'react-native-paper';
 
 import UserData from './userData';
 
 const ProfileScreen = ({navigation}) => {
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
   const goBack = () => navigation.navigate('Home_screen');
   return (
     <ScrollView>
@@ -16,14 +18,14 @@ const ProfileScreen = ({navigation}) => {
         <Title>Your user Login Data</Title>
         <TextInput
           label="email"
-          value={''}
-          onChangeText={text => console.log('hey')}
+          value={email}
+          onChangeText={email => setEmail(email)}
           mode="outlined"
         />
         <TextInput
           label="Password"
-          value={''}
-          onChangeText={text => console.log('hey password')}
+          value={password}
+          onChangeText={password => setPassword(password)}
           mode="outlined"
         />
         <Button mode="contained" onPress={() => console.log('pressed')}>

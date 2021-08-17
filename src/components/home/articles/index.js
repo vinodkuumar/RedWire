@@ -18,7 +18,7 @@ const HomeScreen = (props) => {
     dispatch(newsAction.fetchArticles());
   }, [dispatch]);
   const {articles} = useSelector(state => state.news.articles);
-  console.log('articles = ', articles);
+//  console.log('articles = ', articles);
 
   return (
     <FlatList

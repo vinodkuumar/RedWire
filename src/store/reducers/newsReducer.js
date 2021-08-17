@@ -1,6 +1,7 @@
 const initialState = {
     articles: [],
     favourites: [],
+    videos: []
 }
 
 export default function (state = initialState, action){
@@ -10,7 +11,12 @@ export default function (state = initialState, action){
                 ...state,
                 articles: action.payload
             }
+        case 'FETCH_VIDEOS':
+            return{
+                ...state,
+                videos: action.payload
+            }
     }
     return state;
-    
+
 }

@@ -14,6 +14,7 @@ const UserData = () => {
   const [loading, setLoading] = useState(false);
   const error = useSelector(state => state.auth.error);
   const {user} = useSelector(state => state.auth);
+  console.log('user data = ', user);
   const dispatch = useDispatch();
 
   const handleSubmit = values => {
@@ -82,7 +83,11 @@ const UserData = () => {
             onBlur={handleBlur('age is required')}
             value={values.age}
           />
-          <Button mode="contained" onPress={handleSubmit}>
+          <Button
+              disabled={loading}
+              loading={loading} 
+              mode="contained" 
+              onPress={handleSubmit}>
             Update
           </Button>
         </View>
