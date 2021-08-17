@@ -62,3 +62,10 @@ const API_KEY= "AIzaSyBVBzOASEl7eq50CM085LUoMYEnDP6WMCI"
           })
       }
   }
+
+  export const toggleFavourites = url => {
+    return {
+      type: 'TOGGLE_FAVOURITES',
+      payload: url
+    }
+  }

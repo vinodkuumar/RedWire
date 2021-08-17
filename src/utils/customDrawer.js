@@ -9,7 +9,8 @@ const SideDrawerCustom = (props) => {
     const mainOptions = [
         {title: 'News', location: 'Home'},
         {title: 'Videos', location: 'Videos'},
-        {title: 'Profile', location: 'Profile'}
+        {title: 'Profile', location: 'Profile'},
+        {title: 'Favourites', location: 'Favourites'}
     ]
     return(
         <DrawerContentScrollView {...props}>

@@ -9,16 +9,17 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import promiseMiddleware from 'redux-promise';
 import reduxThunk from 'redux-thunk';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import reducers from './src/store/reducers';
 import {name as appName} from './app.json';
 import {DarkTheme, Provider as PaperProvider} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {View,Text,LogBox} from 'react-native';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = composeWithDevTools(applyMiddleware(reduxThunk));
 const createStoreWithMiddleware = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(reduxThunk)),
+  composeEnhancers
 );
 
 const toastConfig = {

@@ -11,10 +11,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import SideDrawerCustom from './utils/customDrawer';
 import {Colors} from './utils/tools';
 
-import {Stack, HomeStack, VideosStack, screenOptions} from './routes/Stacks';
+import {Stack, HomeStack, VideosStack, FavouritesStack,screenOptions} from './routes/Stacks';
 import VideoScreen from './components/home/videos/video';
 import AuthScreen from './components/auth';
 import ProfileScreen from './components/user/profile';
+import FavouritesScreen from './components/FavouritesScreen';
 import Splash from './components/auth/splash';
 
 const Drawer = createDrawerNavigator();
@@ -26,6 +27,7 @@ const MainDrawer = () => (
     <Drawer.Screen name="Home" component={HomeStack} />
     <Drawer.Screen name="Videos" component={VideosStack} />
     <Drawer.Screen name="Profile" component={ProfileScreen} />
+    <Drawer.Screen name="Favourites" component={FavouritesStack} />
   </Drawer.Navigator>
 );
 

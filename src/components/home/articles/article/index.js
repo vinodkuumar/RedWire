@@ -7,8 +7,9 @@ import {View,
     ImageBackground
 } from 'react-native';
 import {Image} from 'react-native-elements';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ContentShow from '../../../../utils/contentShow';
-import * as newsAction from '../../../../store/actions/index';
+import {toggleFavourites} from '../../../../store/actions/index';
 import {useSelector,useDispatch} from 'react-redux';
 
 
@@ -17,6 +18,9 @@ const ArticleScreen = (props) => {
     const {articleUrl} = props.route.params;
     console.log('articleurl = ',articleUrl);
     const article = useSelector(state => state.news.articles.articles.find(article => article.url === articleUrl))
+
+    const isFav = useSelector(state => 
+      state.news.favourites.some(article => article.url === articleUrl))
 
     return(
         <View style={styles.container}>
@@ -30,14 +34,14 @@ const ArticleScreen = (props) => {
             <View style={styles.titleContainer}>
               <Text style={styles.author}>{article.author}</Text>
             </View>
-            {/* <MaterialIcons
+            <MaterialIcons
               name={isFav ? 'favorite' : 'favorite-border'}
               color="#72bcd4"
               size={24}
               onPress={() => {
-                dispatch(newsAction.toggleFavourites(article.url));
+                dispatch(toggleFavourites(article.url));
               }}
-            /> */}
+            />
           </ImageBackground>
         </View>
         <View style={styles.description}>

@@ -11,6 +11,9 @@ import * as newsAction from '../store/actions';
 
 const Card = props => {
     const dispatch = useDispatch();
+    const isFav = useSelector(state => 
+      state.news.favourites.some(article => article.url === props.url),
+      )
     return(
         <TouchableOpacity
       onPress={() => {
@@ -35,14 +38,14 @@ const Card = props => {
               ? props.title.slice(0, 22) + '...'
               : props.title}
           </Text>
-          {/* <MaterialIcons
+          <MaterialIcons
             name={isFav ? 'favorite' : 'favorite-border'}
             color="#72bcd4"
             size={24}
             onPress={() => {
               dispatch(newsAction.toggleFavourites(props.url));
             }}
-          /> */}
+          />
         </View>
         <View style={styles.descriptionWrapper}>
           <Text style={styles.description}>
