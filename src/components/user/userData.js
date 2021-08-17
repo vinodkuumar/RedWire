@@ -46,9 +46,9 @@ const UserData = () => {
     <Formik
       enableReinitialize={true}
       initialValues={{
-        name: user.name ? user.name : '',
-        lastname: user.lastname ? user.lastname : '',
-        age: user.age ? user.age : '',
+        name: '',
+        lastname: '',
+        age: ''
       }}
       validationSchema={Yup.object({
         name: Yup.string().required('The name is required'),

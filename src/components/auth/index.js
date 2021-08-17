@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,40 +9,43 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Input, Button} from 'react-native-elements';
 import {LogoText, Colors, showToast} from '../../utils/tools';
 
-const AuthScreen = () => {
+const AuthScreen = props => {
   const dispatch = useDispatch();
-  const error = useSelector(state => state.auth.error);
+  const [error, setError] = useState();
 
   const [formType, setFormType] = useState(true);
   const [secureEntry, setSecureEntry] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      // showToast('error', 'Sorry', error);
+      // setLoading(false);
+      Alert.alert('An Error Occurred!', error, [{text: 'Okay'}]);
+    }
+  }, [error]);
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     return () => dispatch(clearAuthError());
+  //   }, []),
+  // );
 
   const handleSubmit = values => {
     setLoading(true);
     if (formType) {
       dispatch(registerUser(values));
       alert('registered successfully');
-
-      
+      props.navigation.navigate('VideoScreen');
     } else {
       //sign in
       dispatch(loginUser(values));
       alert('login success');
-
-      
+      props.navigation.navigate('VideoScreen');
     }
+    setError(null);
+    setLoading(false);
   };
-  useEffect(() => {
-    if (error) {
-      showToast('error', 'Sorry', error);
-      setLoading(false);
-    }
-  }, [error]);
-  useFocusEffect(
-    useCallback(() => {
-      return () => dispatch(clearAuthError());
-    }, []),
-  );
+
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>

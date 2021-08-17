@@ -2,23 +2,7 @@ import {firebase, userCollection} from '../../firebase';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const registerUser = async ({email, password}) => {
-  try {
-    const response = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
 
-    const {user} = response;
-    const userProfile = {
-      uid: user.uid,
-      email: email,
-    };
-    await usersCollection.doc(user.uid).set(userProfile);
-    return {isAuth: true, user: userProfile};
-  } catch (error) {
-    return {error: error.message};
-  }
-};
 
 const readData = () => {
   var userId = firebase.auth().currentUser.uid;
@@ -28,19 +12,6 @@ const readData = () => {
     .once('value');
 };
 
-export const loginUser = async ({email, password}) => {
-  try {
-    const response = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-    const data = readData();
-    console.warn(data);
-
-    return {isAuth: true, user: data};
-  } catch (error) {
-    return {error: error.message};
-  }
-};
 
 export const autoSignIn = () =>
   new Promise((resolve, reject) => {
