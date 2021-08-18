@@ -8,6 +8,7 @@ import {useFocusEffect} from '@react-navigation/native';
 
 import {Input, Button} from 'react-native-elements';
 import {LogoText, Colors, showToast} from '../../utils/tools';
+import {MainStack, AuthStack} from '../../routes/Stacks';
 
 const AuthScreen = props => {
   const dispatch = useDispatch();
@@ -30,20 +31,15 @@ const AuthScreen = props => {
   //   }, []),
   // );
 
-  const handleSubmit = values => {
-    setLoading(true);
+  const handleSubmit = async values => {
+    let action;
     if (formType) {
       dispatch(registerUser(values));
-      alert('registered successfully');
-      props.navigation.navigate('VideoScreen');
+      return <MainStack />;
     } else {
-      //sign in
       dispatch(loginUser(values));
-      alert('login success');
-      props.navigation.navigate('VideoScreen');
+      return <MainStack />;
     }
-    setError(null);
-    setLoading(false);
   };
 
   return (

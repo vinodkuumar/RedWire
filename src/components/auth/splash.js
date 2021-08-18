@@ -4,24 +4,33 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {registerUser,loginUser,logoutUser,authenticate} from '../../store/actions';
 import {Colors} from '../../utils/tools';
+import {MainStack,AuthStack} from '../../routes/Stacks';
 
 const Splash = (props) => {
     const dispatch = useDispatch();
     useEffect(() => {
         const tryLogin = async () => {
-            const userData = await AsyncStorage.getItem('userData')
+            const userData = await AsyncStorage.getItem('userData');
+            console.log('userData is ',userData);
             if(!userData){
-                props.navigation.navigate('Main')
+                return(
+                    <AuthStack />
+                )
             }
             const transformedData = JSON.parse(userData)
             const {token,userId,expiryDate} = transformedData
             const expirationDate = new Date(expiryDate)
 
             if(expirationDate <= new Date() || !token || !userId){
-                props.navigation.navigate('Main')
-                return;
+                
+                return(
+                    <AuthStack />
+                )
             }
             dispatch(authenticate(userId,token))
+            return(
+                <MainStack />
+            )
         }
         tryLogin()
     },[dispatch])

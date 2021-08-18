@@ -28,12 +28,12 @@ const SideDrawerCustom = (props) => {
                     titleStyle={{width: '100%'}}
                 /> 
             ))}
-            <Button 
+            {/* <Button 
                 title="Logout"
                 onPress={() => alert('Logout')}
                 buttonStyle={styles.drawerButton}
                 titleStyle={{width: '100%'}}
-            />
+            /> */}
         </DrawerContentScrollView>
     )
 }

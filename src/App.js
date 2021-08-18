@@ -18,7 +18,8 @@ import {
   screenOptions,
   MainDrawer,
   MainStack,
-  AuthStack
+  AuthStack,
+  SplashStack
 } from './routes/Stacks';
 import VideoScreen from './components/home/videos/video';
 import AuthScreen from './components/auth';
@@ -35,6 +36,8 @@ const App = () =>  {
     return (
       <NavigationContainer>
         {!isAuth && <MainStack />}
+        {/* {isAuth && <MainStack />} */}
+        
 
       </NavigationContainer>
     );

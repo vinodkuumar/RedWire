@@ -1,5 +1,7 @@
 import * as api from '../api';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const AUTHENTICATE = 'AUTHENTICATE';
 
 export const authenticate = (userId,token) => {
@@ -10,7 +12,7 @@ export const authenticate = (userId,token) => {
   }
 }
 
-export const registerUser = (email, password) => {
+export const registerUser = ({email,password}) => {
   return async dispatch => {
     const response = await fetch(
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAx3HQexDskPQ_pb_h2o2xMQ9Ea8u0tx9I',
@@ -20,8 +22,8 @@ export const registerUser = (email, password) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: email,
-          password: password,
+          email,
+          password,
           returnSecureToken: true
         })
       }
@@ -46,7 +48,7 @@ export const registerUser = (email, password) => {
   };
 };
 
-export const loginUser = (email,password) => {
+export const loginUser = ({email,password}) => {
   return async dispatch => {
       const response = await fetch(
           'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAx3HQexDskPQ_pb_h2o2xMQ9Ea8u0tx9I',
@@ -56,12 +58,14 @@ export const loginUser = (email,password) => {
                   'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                  email: email,
-                  password: password,
+                  email,
+                  password,
                   returnSecureToken: true
               })
           }
+          
       )
+      console.log('email is',email)
       if(!response.ok){
           const errorResData = await response.json()
           console.log(errorResData)
@@ -102,10 +106,12 @@ export const autoSignIn = () => ({
     payload: api.autoSignIn()
 })
 
-export const logoutUser = () => ({
-    type: 'LOGOUT_USER',
-    payload: api.logoutUser()
-})
+export const logoutUser = () => {
+  AsyncStorage.removeItem('userData')
+  return{
+    type: 'LOGOUT'
+  }
+}
 
 export const updateUserData = (values,user) => ({
     type: 'UPD_USER_DATA',

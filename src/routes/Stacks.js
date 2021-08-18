@@ -16,6 +16,7 @@ import SideDrawerCustom from '../utils/customDrawer';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AuthScreen from '../components/auth';
+import Splash from '../components/auth/splash';
 
 const Drawer = createDrawerNavigator();
 
@@ -133,3 +134,11 @@ export const AuthStack = () => {
         
     )
 } 
+
+export const SplashStack = () => {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Splash" component={Splash} />
+    </Stack.Navigator>
+  )
+}
